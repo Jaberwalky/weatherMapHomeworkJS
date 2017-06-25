@@ -3,6 +3,7 @@ var app = function(){
 
   var mainMap = new MapWrapper();
 
+
   var container = document.getElementById('main-map');
   container.style.height = document.body.scrollHeight +"px";
 
@@ -13,13 +14,19 @@ var app = function(){
     request.addEventListener('load', function(){
       var weatherData = JSON.parse(request.responseText);
       updateTable(weatherData);
-
-      var latlng = new google.maps.LatLng(weatherData.city.coord.lat, weatherData.city.coord.lon - 0.09);
+      var latlng = new google.maps.LatLng(weatherData.city.coord.lat, weatherData.city.coord.lon - 0.06);
       mainMap.googleMap.panTo(latlng)
+      var data = getData(weatherData.list)
+      new ColumnChart(data);
     })
     request.send();
   };
 
+  
+
+  // set to grab default city from local storage
+  // var city = "London"
+  // getWeatherByCity(city)
 // onload = use local data to store last
   displayWeatherByCity("London");
 
@@ -34,8 +41,7 @@ var app = function(){
     var table = document.getElementById("weather-data");
     var tableRow = document.createElement("tr");
     var tableHeader = document.createElement("th");
-    // tableRow.appendChild(tableHeader);
-    // tableRow.appendChild(tableHeader);
+
     tableHeader.innerText = cityName;
     tableHeader.colSpan = "3";
     tableRow.appendChild(tableHeader);
@@ -56,10 +62,12 @@ var app = function(){
       dateCell.innerText = dayStrings[day];
       row.appendChild(dateCell);
       var iconCell = document.createElement("td");
-      //tb created
-      row.appendChild(iconCell);
+      var img = document.createElement("img");
+      img.src = "images/" + weatherArray[i].weather[0].icon + ".png"
+      iconCell.appendChild(img);
+      row.appendChild(iconCell)
       var weatherCell = document.createElement("td");
-      weatherCell.innerText = kToC(weatherArray[i].temp.min) + "/" + kToC(weatherArray[i].temp.max);
+      weatherCell.innerHTML = kToC(weatherArray[i].temp.max) + "<sup>°C</sup> " + kToC(weatherArray[i].temp.min) + "<sup>°C</sup>";
       row.appendChild(weatherCell);
       table.appendChild(row);
     }
@@ -75,19 +83,47 @@ var app = function(){
     return Math.round( kelvins - 273.15 )
   }
 
-  // set to grab default city from local storage
-  // var city = "London"
-  // getWeatherByCity(city)
 
   var button = document.getElementById("city-button")
   button.addEventListener('click', function(){
     var userInput = document.getElementById("city-input")
     city = userInput.value;
-
     console.log(mainMap.googleMap)
     // this.googleMap.setStyle({invert_lightness: true});
     displayWeatherByCity(city)
   });
+
+  var getData = function(weatherArray){
+    returnArray = [];
+    var dayStrings = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+    for ( var i = 0; i < weatherArray.length; i++ ){
+      var day = timeStampToDay(weatherArray[i].dt);
+      var tempObject = {
+        low: kToC(weatherArray[i].temp.min),
+        high: kToC(weatherArray[i].temp.max),
+        name: dayStrings[day],
+        color: "#00FF00"
+      };
+      returnArray.push(tempObject);
+    }
+    return(returnArray)
+  }
+
+  var toggleChart = document.getElementById("toggle-chart-button");
+
+  toggleChart.addEventListener('click', function(){
+    var chart = document.getElementById("chart-block");
+    var overlay = document.getElementById("overlay-elements");
+    if (chart.style.visibility === "hidden"){
+      chart.style.visibility = "visible";
+      overlay.style.overflow = "auto";
+      overlay.style.pointerEvents = "all";
+    } else {
+      chart.style.visibility = "hidden";
+      overlay.style.pointerEvents = "none";
+      overlay.style.overflow = "visible";
+    }
+  })
 
 
 }

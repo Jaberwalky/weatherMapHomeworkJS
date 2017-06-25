@@ -1,9 +1,11 @@
 body{
   margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
 }
 
 #header-background{
-  background: rgba(112,128,144, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   height: 4em;
 }
 
@@ -15,25 +17,53 @@ body{
 #weather-block{
   flex: 1;
   border: 1px solid black;
-  width: 45%;
+  overflow: auto;
+  pointer-events: all;
+  /*background:;*/
+}
+
+
+
+#weather-bg{
+  background-color: gray;
+  background: rgba(112,128,144, 0.3);
+  /*TODO: change margins after internal table resized.*/
+}
+
+td img {
+  width: 40px;
+  filter: brightness(300%);
+  /*z-index: 100;*/
+}
+
+#chart-block{
+  display: flex;
+  flex: 2;
+  display: column;
+  align-items: center;
+  border: 1px solid red;
+  visibility: hidden;
+  overflow: auto;
 }
 
 #chart-data{
   flex: 1;
-  border: 1px solid red;
-  width: 45%;
 }
 
 table{
-  font-size: 3em;
-  font-family: sans-serif;
-  border: 4px solid blue;
+  z-index: 2;
+  font-size: 2em;
+  /*border: 4px solid blue;*/
   margin: 100px auto;
   border-collapse: collapse;
 }
 
+sup{
+  font-size: 0.5em;
+}
+
 td{
-  border: 2px solid blue;
+  /*border: 2px solid blue;*/
 }
 
 #main-map{
@@ -49,7 +79,6 @@ td{
 
 #overlay-elements{
   width: 80%;
-  /*height: 600px;*/
   margin-left: auto;
   margin-right: auto;
   z-index: 1000;
@@ -57,4 +86,7 @@ td{
   display: flex;
   flex-direction: row;
   justify-content: center;
+  overflow:visible;
+  pointer-events:none;
+  background:none;
 }

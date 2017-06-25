@@ -3,8 +3,14 @@
 
 <head>
     <title>Weather Map Homework</title>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel='stylesheet' type='text/css' href='main.css'>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="columnChart.js"></script>
     <script src='mapWrapper.js'> </script>
     <script src="app.js"></script>
 </head>
@@ -20,11 +26,15 @@
   <div id="overlay-elements">
 
     <div id="weather-block">
-      <table id="weather-data"></table>
+      <div id="weather-bg">
+        <table id="weather-data"></table>
+      </div>
+      <button id="toggle-chart-button" type="button" name="Show Chart">Toggle Chart</button>
     </div>
-    
-    <div id="chart-data">
-      <h1>placeholder</h1>
+
+    <div id="chart-block">
+      <div id="chart-data">
+      </div>
     </div>
 
   </div>
