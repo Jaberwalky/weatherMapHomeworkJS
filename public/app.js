@@ -7,7 +7,11 @@ var app = function(){
   var container = document.getElementById('main-map');
   container.style.height = document.body.scrollHeight +"px";
 
+  document.getElementById("overlay-elements").style.height = document.body.scrollHeight - 70 + "px"
+
   var displayWeatherByCity = function(city){
+    var jsonCity = JSON.stringify(city);
+    localStorage.setItem('city', jsonCity);
     var url = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + ",uk&cnt=7&appid=8d45e814885786cd7adbc48c1754c9cb"
     var request = new XMLHttpRequest();
     request.open('GET', url);
@@ -15,20 +19,18 @@ var app = function(){
       var weatherData = JSON.parse(request.responseText);
       updateTable(weatherData);
       var latlng = new google.maps.LatLng(weatherData.city.coord.lat, weatherData.city.coord.lon - 0.06);
-      mainMap.googleMap.panTo(latlng)
+      mainMap.googleMap.panTo(latlng);
       var data = getData(weatherData.list)
-      new ColumnChart(data);
+      new AreaChart(data);
     })
     request.send();
   };
 
-  
-
+  var jsonCity = localStorage.getItem('city');
+  var city = JSON.parse(jsonCity)
   // set to grab default city from local storage
   // var city = "London"
-  // getWeatherByCity(city)
-// onload = use local data to store last
-  displayWeatherByCity("London");
+  displayWeatherByCity(city);
 
   var updateTable = function(weatherData){
     var table = document.getElementById("weather-data");
@@ -41,7 +43,6 @@ var app = function(){
     var table = document.getElementById("weather-data");
     var tableRow = document.createElement("tr");
     var tableHeader = document.createElement("th");
-
     tableHeader.innerText = cityName;
     tableHeader.colSpan = "3";
     tableRow.appendChild(tableHeader);
@@ -67,7 +68,7 @@ var app = function(){
       iconCell.appendChild(img);
       row.appendChild(iconCell)
       var weatherCell = document.createElement("td");
-      weatherCell.innerHTML = kToC(weatherArray[i].temp.max) + "<sup>°C</sup> " + kToC(weatherArray[i].temp.min) + "<sup>°C</sup>";
+      weatherCell.innerHTML = kToC(weatherArray[i].temp.max) + "<sup>°C</sup> / " + kToC(weatherArray[i].temp.min) + "<sup>°C</sup>";
       row.appendChild(weatherCell);
       table.appendChild(row);
     }
@@ -85,6 +86,7 @@ var app = function(){
 
 
   var button = document.getElementById("city-button")
+
   button.addEventListener('click', function(){
     var userInput = document.getElementById("city-input")
     city = userInput.value;
@@ -111,17 +113,17 @@ var app = function(){
 
   var toggleChart = document.getElementById("toggle-chart-button");
 
+
   toggleChart.addEventListener('click', function(){
     var chart = document.getElementById("chart-block");
-    var overlay = document.getElementById("overlay-elements");
     if (chart.style.visibility === "hidden"){
       chart.style.visibility = "visible";
-      overlay.style.overflow = "auto";
-      overlay.style.pointerEvents = "all";
+      chart.style.pointerEvents = "all";
+      this.style.backgroundColor = "#8dbeee";
     } else {
       chart.style.visibility = "hidden";
-      overlay.style.pointerEvents = "none";
-      overlay.style.overflow = "visible";
+      chart.style.pointerEvents = "none";
+      this.style.backgroundColor = "rgba(192,192,192, 0.7)";
     }
   })
 

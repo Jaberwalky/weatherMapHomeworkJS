@@ -1,49 +1,103 @@
 body{
-  margin: 0;
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
+  color: white;
+  margin: 0;
 }
 
 #header-background{
-  background: rgba(0, 0, 0, 0.5);
-  height: 4em;
+  z-index: 2;
+  background: rgba(192,192,192, 0.7);
+  height: 70px;
 }
 
 #header{
-  z-index: 1000;
+  margin-top: 10px;
   position: absolute;
+  display: flex;
+  z-index: 3;
 }
+
+#city-input{
+  background: rgba(255, 255, 255, 0.7);
+  width: 24em;
+  height: 40px;
+  margin-left: 20px;
+  font-size: 14px;
+  text-align: center;
+  padding: 0;
+  border: 1px;
+  border-radius: 5px 0 0 5px;
+}
+
+#city-button{
+  background-image: url("images/search.png");
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  background-position: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid white;
+}
+
+#city-button:focus {
+  outline: 0;
+};
 
 #weather-block{
-  flex: 1;
-  border: 1px solid black;
-  overflow: auto;
-  pointer-events: all;
-  /*background:;*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 2;
+  z-index: 5;
 }
 
-
-
+#weather-data{
+  background: rgba(192,192,192, 0.7);
+  margin: 10px;
+  border-radius: 20px 20px 0 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 #weather-bg{
-  background-color: gray;
-  background: rgba(112,128,144, 0.3);
-  /*TODO: change margins after internal table resized.*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-td img {
-  width: 40px;
-  filter: brightness(300%);
-  /*z-index: 100;*/
+#toggle-chart-button{
+  background: rgba(192,192,192, 0.7);
+  width: 93.75%;
+  border: none;
+  background-image: url('images/graphIcon.png');
+  background-position: center;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  height: 55px;
+  border-radius: 0 0 20px 20px;
+  margin-top: -8px;
+  padding: 0;
 }
+
+#toggle-chart-button:focus{
+  outline: 0;
+}
+
 
 #chart-block{
   display: flex;
-  flex: 2;
+  flex: 3;
   display: column;
   align-items: center;
-  border: 1px solid red;
+
   visibility: hidden;
-  overflow: auto;
+  overflow: hidden;
+  background: none;
+  pointer-events: none;
+
 }
 
 #chart-data{
@@ -53,9 +107,14 @@ td img {
 table{
   z-index: 2;
   font-size: 2em;
-  /*border: 4px solid blue;*/
   margin: 100px auto;
   border-collapse: collapse;
+}
+
+td img {
+  width: 50px;
+  filter: brightness(300%);
+  vertical-align: middle;
 }
 
 sup{
@@ -63,7 +122,22 @@ sup{
 }
 
 td{
-  /*border: 2px solid blue;*/
+  vertical-align: middle;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  border-bottom: 1px solid white;
+}
+
+tr:last-child > td {
+  border-bottom: 0;
+}
+
+th {
+  padding-top: 10px;
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
 }
 
 #main-map{
@@ -71,22 +145,22 @@ td{
   height: 100%;
   position: absolute;
   top: 0;
-  bottom: -200px;
+  /*bottom: -70px;*/
   left: 0;
   right: 0;
-  z-index: 0;
+  z-index: -2;
+  pointer-events: all;
 }
 
 #overlay-elements{
+  pointer-events: all;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
-  z-index: 1000;
+  z-index: 1;
   position:relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  overflow:visible;
-  pointer-events:none;
-  background:none;
+  align-items: center;
 }

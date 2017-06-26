@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel='stylesheet' type='text/css' href='main.css'>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="columnChart.js"></script>
+    <script src="areaChart.js"></script>
     <script src='mapWrapper.js'> </script>
     <script src="app.js"></script>
 </head>
@@ -19,29 +19,26 @@
   <div id="header-background">
     <div id="header">
       <input type="text" id="city-input">
-      <button type="button" id="city-button">Show Me The Forecast</button>
+      <button type="button" id="city-button"></button>
     </div>
   </div>
 
   <div id="overlay-elements">
-
     <div id="weather-block">
       <div id="weather-bg">
         <table id="weather-data"></table>
+        <button id="toggle-chart-button" type="button" name="Show Chart"></button>
       </div>
-      <button id="toggle-chart-button" type="button" name="Show Chart">Toggle Chart</button>
     </div>
 
     <div id="chart-block">
       <div id="chart-data">
       </div>
     </div>
-
   </div>
 
-  <div id="map-colour">
-    <div id="main-map"></div>
-  </div>
+  <div id="main-map"></div>
+
 
 </body>
 </html>

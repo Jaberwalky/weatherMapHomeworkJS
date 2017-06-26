@@ -1,4 +1,4 @@
-var ColumnChart = function (data) {
+var AreaChart = function (data) {
 
   var container = document.querySelector('#chart-data');
 
@@ -17,6 +17,12 @@ var ColumnChart = function (data) {
           title: {
               text: null
           }
+      },
+
+      xAxis: {
+        labels: {
+          enabled: false
+        }
       },
 
       tooltip: {
